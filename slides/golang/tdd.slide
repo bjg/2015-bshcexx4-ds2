@@ -1,0 +1,183 @@
+Test Driven Development in Go
+
+BSc (Hons) in Computing - Evening Distributed Systems
+
+Brian Gillespie, School of Computing, NCI
+Jan 2015
+
+bgillespie@ncirl.ie
+
+@__bjg
+ 
+* The Test-Driven Philosophy
+
+- Before we build any compontent, we first build a set of tests to check if we've got our implementation of that component working properly
+- Each test case we develop tests a small detail of our code
+- Taking the link-list API example, a single test case might check that the length of an empty list is zero or that a newly inserted element can be found
+- The tests, in total, build into an inventory for quality assurance and specification compliance, and become just as important output of a project is the implementation code itself
+- Not only developer can be confident that the implementation is correct also that future changes can be tested to make sure they don't break what was already working
+
+* The Basic TDD Workflow
+
+For our purpose here, it is assumed here that the developer is using a source code control system which is almost invariably true nowadays. We will discuss source-code control as a separate topic. Continuing with our linked-list case study, the typical TDD workflow looks something like the following:
+
+- Say, we want to add a new feature, e.g. implement the list element delete interface
+- We first create, what is called, a _failing_test_case_ to test that a delete is working (*)
+- Next we create a first-cut version of the feature implementation
+- Then we run the tests
+- If they all pass, we are done and can commit the change into source code control
+- Otherwise we repeatedly refine the implementation until we get all our tests to pass
+
+*(**)* There are many different ways to implement a test like this. Let's assume that we can test for the presence of the element following deletion and if it's gone we consider that a pass - actually it's a lot more subtle than that, but that will suffice for now
+
+* Writing Tests in Go
+
+- Go ships with a simple, built-in unit testing framework which we can use for the TDD of our linked-list
+- Assuming we will create our linked list in a file called `list.go`, then, by convention, our tests will to into a file called `list_test.go`. It might look something like this
+
+  package list
+
+  import "testing"
+
+  func TestRemove(t *testing.T) {
+      // Test implementation
+  }
+
+- Of note here is the import of the external `testing` package and the naming convention for our unit test functions
+- All such functions must be begin with the word *Test*
+
+* Running Go Unit Tests
+
+- We can run our tests, on the command line, optionally specifying the package path name as follows
+
+  go test src/github.com/2015-dt2xx-aem/golang/list
+
+- Go will run our unit tests under the testing harness and reports the number of passes and failures and where the failures occured
+
+* Reporting Failed Test Cases
+
+- Recall the unit test case function argument which we called `t` (by convention)
+
+  func TextXxx(t *testing.T) {
+      // Unit test implementation
+  }
+
+- We can use this reference to report errors in our tests which will be included in the test run report.
+- If you want the tests to continue after an error, then use `t.Error()`
+
+  t.Error("Expected list length to be zero after removing only element")
+  
+- If you want the tests to stop as soon an error is encountered, then use `t.Fatal()`
+
+  t.Fatal("Expected list length to be zero following creation")
+
+* Testing a Linked-List Implementation
+
+- Recall that we could build a simple linked-list implementation supporting addition, removal and searching of integers. Implied here too is the requirement for a create interface. Let's also include a length interface too
+- Let's stub out our basic tests. Other then needing to start with the prefix `Test`, our test function names can be whatever we like
+
+  func TestNew(t *testing.T) {
+  }
+
+  func TestAdd(t *testing.T) {
+  }
+
+  func TestFind(t *testing.T) {
+  }
+
+  func TestLength(t *testing.T) {
+  }
+
+  func TestDelete(t *testing.T) {
+  }
+
+* Next steps
+
+- The test cases listed here are only the beginning. Each interface may require many individual tests of their own to verify that they work
+- You have the option of creating lots of `TestXxx()` functions to do this or you can embed the sub-tests within a limited number of high-level test functions
+- In general, it's probably better to partition each small test case into its own `TextXxx()` function as that aid better reporting and understanding of what exactly is being tested. Embedding multiple tests inside a function can hide what's going on
+- For our linked-list example in Go, we will develop one test case at a time
+- For each one we develop, we will first run that test and see it fail. Then we'll implement the required functionality until it passes
+- We proceed this way until we can't think of anything else to test
+
+* Worked Test Case Example
+
+- Let's build a test case for the create interface in `list_test.go`
+
+  package list
+
+  import "testing"
+
+  func TestNew(t *testing.T) {
+      New()
+  }
+
+- This might not seem like it does very much, but it's something to get started. When we run this, we expect it to fail and so it does
+
+  $ go run
+  ./list_test.go:8: undefined: New
+  FAIL	_/Users/brian/github.com/2015-bshcexx4-ds2/slides/golang/list [build failed]
+
+* Making The First Test Pass
+
+- Now let's fix this by providing a basic implementation of a `New()` function in `list.go`
+
+  package list
+
+  func New() {
+  }
+
+- Now the test passes!
+
+  $ go run
+  PASS
+  ok  	_/Users/brian/github.com/2015-bshcexx4-ds2/slides/golang/list	0.012s
+
+- Although that hasn't really moved the problem very far, it is beginning to force us to think about what the interals of our linked-list data structure should look like
+
+* Extending the Create Unit Test
+
+- At the very minimum, we will need a data sturcture to represent a linked list. Let's first test the return value of `New()` which will lead to a linked-list object design
+
+  func TestNew(t *testing.T) {
+      l := New()
+      if l == nil {
+          t.Fatal("Expected a new list to be created")
+      }
+  }
+
+- We can then providing a basic passing implementation as follows
+
+    type List struct {
+    }
+
+    func New() *List {
+        return new(List)
+    }
+
+* Finishing The Implementation
+
+- This might seem like an odd way to proceed for such a simple example problem, but it illustrates an important idea in TDD which is proceed in very small increments, testing each evolution along the way until you develop a complete solution
+- Eventually we would end up developing the linked-list internals which would allow the remaining interfaces to be completed
+- Our list will require an private internal data structure which will hold our values and allow the linking between elements, leading to something like this
+
+  type node struct {
+      next *node
+      value int
+  }
+
+  type List struct {
+      head   node
+  }
+
+
+
+* Learning Resources
+
+- Best place to start learning Go in at the [[http://golang.org/][project web site]]
+- There is an [[http://tour.golang.org/][interactive tour]] which introduces you to the main elements of the language
+- The [[http://play.golang.org/][Go Playground]] allows you Learning Resourcesto write and test Go code in the browser
+- The [[http://golang.org/doc/effective_go.html][Effective Go]] document provides a more detailed treatment
+- The official [[https://golang.org/ref/spec][Go Language Specification]]
+- When [[https://www.google.ie/#q=golang][searching for Go resources on the web]], remember to use the keyword "golang" rather than just "go"
+- Follow [[https://twitter.com/golang][@golang]] on Twitter

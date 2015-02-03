@@ -1,0 +1,98 @@
+Objects, Methods and Interfaces
+
+BSc (Hons) in Computing - Evening Distributed Systems
+
+Brian Gillespie, School of Computing, NCI
+Jan 2015
+
+bgillespie@ncirl.ie
+
+@__bjg
+ 
+* Compound data types
+
+- We've already seen Go's basic data types like `int`, `float32` and `string`
+- For most moderately complex problem solving tasks, we will also need need a compound type to help to abstract the data we need to process
+- Go provides the `struct` and `type` keywords for doing this
+
+  type Rect struct {
+      width float32
+      height float32
+  }
+
+- This example declares a new data type called `Rect` which is a structure having two members, both real numbers
+- You can consider an instance of a `Rect` structure as an _object_ in Go. Go is an object-oriented language, even though it does not support the notion of _classes_ or _inheritance_
+
+* Methods
+
+- We can define a method on this new type to calculate its area
+
+  func (r *Rect) Area() float32 {
+      return r.width * r.height
+  }
+
+- The `Area()` method is just a function which returns the real number result of multiply width and height.
+- But notice that this function declaration is slightly different than those we've seen before. The function accepts a *receiver* in the form of a pointer to a `Rect` object
+- The method can dereference object members directly through this pointer. You will see this kind of object/method pattern throughout Go code
+
+.play rect.go /START OMIT/,/END OMIT/
+
+* Interfaces
+
+- The area method on `Rect` can be considered to be part of the object's _interface_
+- We can formalise and generalise this notion by creating a specific interface definition for objects like `Rect`
+
+  type Shaper interface {
+      Area() float32
+  }
+
+- This creates a new type which is an interface for any object which implements an `Area()` method which returns a `float32`
+- Rect is now implicitly a `Shaper` because is conforms to the `Shaper` interface. Let's create another one
+
+  type Circle struct {
+      radius float32
+  }
+
+* Using interface types
+
+.play shaper.go /START OMIT/,/END OMIT/
+
+* Building a new data type
+
+- We can use the base building blocks of objects and methods define additional, more complex data types in Go. Let's desribe the design of a _linked_list_ data structure
+- When you think about a data structure, you should immediately think about what operations you want to perform on that data structure. In other words, what does its interface (a.k.a. API) look like?
+- For our simple linked list example, let's assume we would like to add an integer to the list, remove an integer from the list and check for the presence of (the first instance) of a specific integer in the list
+- The thing to note is that, viewed in this way, there are no obvious implementation details about how any of this might be done
+- This important idea of _abstraction_ and _information_hiding_ is the key to building robust, testable software at scale
+
+* Namespaces
+
+- Having an interface in mind is a good start but we need another vital ingredient
+- The namespacing of objects, methods and interfaces is how we can support large-scale co-operative software development
+- Each developer partitions their code into packages in Go to prevent naming collisions when different parts of software are brought together
+- In Go, this is done using the `package` keyword
+
+  package list
+
+- Client code can consume this list implementation using the `import` keyword
+
+  import "github.com/2014-dt2xx-aem/slides/golang/list"
+
+*Note:* The `import` keyword takes a string-path argument whereas `package` takes a language symbol name
+
+* Building out the implementation
+
+- Given this is a trivial example, it might be tempting to proceed directly to the implementation of the linked-list code. We only have three, relatively simple functions to code after all
+- However, best practice in modern software development suggests that we need to put *testing* front and centre of coding practice
+- The most common way that this is done is using a methodology called test-driven-development (TDD)
+- Before we build any implementation code, we first build a set of tests to check if we've got it working correctly
+
+* Learning Resources
+
+- Best place to start learning Go in at the [[http://golang.org/][project web site]]
+- There is an [[http://tour.golang.org/][interactive tour]] which introduces you to the main elements of the language
+- The [[http://play.golang.org/][Go Playground]] allows you Learning Resourcesto write and test Go code in the browser
+- The [[http://golang.org/doc/effective_go.html][Effective Go]] document provides a more detailed treatment
+- The official [[https://golang.org/ref/spec][Go Language Specification]]
+- When [[https://www.google.ie/#q=golang][searching for Go resources on the web]], remember to use the keyword "golang" rather than just "go"
+- Follow [[https://twitter.com/golang][@golang]] on Twitter

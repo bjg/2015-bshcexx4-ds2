@@ -1,0 +1,133 @@
+Go Programming Overview
+
+BSc (Hons) in Computing - Evening Distributed Systems
+
+Brian Gillespie, School of Computing, NCI
+Jan 2015
+
+bgillespie@ncirl.ie
+
+@__bjg
+ 
+* Why learn Go?
+
+- Go is a relatively new programming language designed at Google and maintained as an open source project
+- It's a great teaching language because it is small (like C) but powerful and expressive (like Python or Javascript)
+- It is much simpler than C++ or Java and already has a rich and stable standard library
+- Go is a general purpose programming language and is finding applications in everything from systems programming to web development middleware
+- We will use it as a way to refresh and review core programming skills and concepts and as part of our problem-solving toolkit in this class
+
+* What are the basic language features?
+
+- Go's sytnax draws from the C "curly braces" tradition, like Java, Javascript and C#. But you generally don't use statement-terminating semicolons
+- The Go designers were keen that all Go source code would look the same, so there are strong style guidelines and a built-in formatting tool to enforce this. If you stray from the expected style, your code may not actually compile!
+- Go is an imperative, statically-typed, compiled language like C, C++, Java, Scala, etc. However the compiler is very fast so developing Go code feels as productive as developing in interpreted languages like Python or Ruby.
+- The compiler outputs executable binaries for a range of target platforms and does not use a virtual machine runtime architecure like many other languages
+- Go supports packages, function closures, automatic garbage collection and concurrency primitives but has a relatively compact and easy-to-learn syntax
+
+* Your first Go program
+
+.play hello.go
+
+- This canonical hello world example shows that Go also supports Unicode built-in. Click the `Run` button to see its output!
+- Notice the block structure and the function signature
+- As you might expect the `main()` function is the entry point for a Go program. Unlike C, C++ and similar languages, this function has no return type and does not accept any arguments. We'll see how command-line argument passing works later on
+
+* The Go Type System
+
+- As a statically-typed language, the types of variables, function arguments and function return objects are determined at compile-time just like C or Java.
+
+- For explicit types are specified *after* the variables like Pascal and unlike C or Java. A single line comment begins with a double forward-slash `//`
+
+  var myName string = "Go Language" // This is explicity a string ...
+  var aNumber int = -1              // ... and this is an integer
+
+- Explicit declararions  with the `var` keyword, the operator is `=`
+- But, unlike C or Java, Go doesn't always need the programmer to explicitly specify types. In many cases, the compiler uses _type_inference_ to figure out what the type should be.
+
+  myName := "Go Language"           // This variable will of type string because that's obvious
+
+- Implicitly-typed assignments use the Pascal-like operator `:=`
+
+* Arrays and slices
+
+- In Go, you use slices where you might use arrays or lists in other languages.
+- An array is a fixed size data structure all having the same type
+
+  var results [10]float32
+  results[0] = 3.14
+  pi := results[0]              // The variable pi will also be of type float32
+
+- Slices build on the array type, are easier to use and are more idiomatic in Go
+
+  letters := []string{"A", "B", "C", "D"}
+
+- The `make` keyword builds a slide of a specifed type and size and initialises its values so a type-dependent default, which will be zero in the example above
+
+  buffer := make([]byte, 1024)
+
+- The `len` keyword tells us the size of a slice
+
+  n := len(buffer)
+
+* Slice Indexing
+
+- Slice indexing has a compact and intuitive syntax
+
+.play slice.go /START OMIT/,/END OMIT/
+
+- For a more detailed description, see [[http://blog.golang.org/go-slices-usage-and-internals][Go Slices Usage and Internals]]
+
+* Maps
+
+- The built-in _map_ data type associates keywords (of a certain type) to values (of a certain type which may be the same or different).
+- Other languages call this a _dictionary_ or _hash_
+
+.play map.go /START OMIT/,/END OMIT/
+
+* Functions
+
+- Functions are a fundamental building block in Go and are declared with the `func` keyword. A function can accept zero or more typed arguments and return zero or more typed results using the `return` keyword
+
+  func size(s string) int {
+    return len(s)
+  }
+
+  // Parentheses use when more that one return type is specified
+  func check() (bool, error) {
+    // Function body
+
+    return false, nil
+  }
+
+- Note again the function block structure with the trailing opening curly-brace on the first line. This is required or you will need to explicitly insert a semi-colon
+- Functions can also act as _closures_ which is a very powerful pattern for writing expressive and succinct code. More on this idea later in the module
+
+* Functions (cont'd)
+
+- Functions in Go are first-class data types which means they can be passed as arguments to other functions or returned as the results of function calls
+
+.play functions.go /START OMIT/,/END OMIT/
+
+- Here the function `display()` takes, as an argument, a reference to the function `getNumber` and returns a string. Function `getNumber()` take no arguments and returns a number. This example also shows how the `getNumber()` function is invoked which has an intuitive syntax similar to C or Javascript
+- Go naturally also supports recursive function calls
+
+* Learning Resources
+
+- Best place to start learning Go in at the [[http://golang.org/][project web site]]
+- There is an [[http://tour.golang.org/][interactive tour]] which introduces you to the main elements of the language
+- The [[http://play.golang.org/][Go Playground]] allows you Learning Resourcesto write and test Go code in the browser
+- The [[http://golang.org/doc/effective_go.html][Effective Go]] document provides a more detailed treatment
+- The official [[https://golang.org/ref/spec][Go Language Specification]]
+- When [[https://www.google.ie/#q=golang][searching for Go resources on the web]], remember to use the keyword "golang" rather than just "go"
+- Follow [[https://twitter.com/golang][@golang]] on Twitter
+
+* Video Picks
+
+- [[https://www.youtube.com/watch?v=FTl0tl9BGdc][Why Learn Go?]] with [[https://twitter.com/rob_pike][Rob Pike]]
+- [[https://www.youtube.com/watch?v=2KmHtgtEZ1s][Get Started with Go]] with [[https://twitter.com/enneff][Andrew Gerrand]]
+- [[https://www.youtube.com/watch?v=ytEkHepK08c][A Tour of Go]] with [[https://twitter.com/_rsc][Russ Cox]]
+- [[https://www.youtube.com/watch?v=elu0VpLzJL8][Go for Pythonistas]] with [[https://twitter.com/francesc][Francesc Campoy Flores]]
+- [[https://www.youtube.com/watch?v=rKnDgT73v8s][The Go Programming Language]] when announced in 2009
+- [[https://www.youtube.com/watch?v=VoS7DsT1rdM][GopherCon 2014 Opening Keynote]] by [[https://twitter.com/rob_pike][Rob Pike]]
+- [[https://gophercasts.io/][Gophercasts]] with [[https://twitter.com/codegangsta][Jeremy Saenz]]

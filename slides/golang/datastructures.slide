@@ -76,7 +76,7 @@ bgillespie@ncirl.ie
 
 - Client code can consume this list implementation using the `import` keyword
 
-  import "github.com/2014-dt2xx-aem/slides/golang/list"
+  import "github.com/2015-bshcexx4-ds2/slides/golang/list"
 
 *Note:* The `import` keyword takes a string-path argument whereas `package` takes a language symbol name
 

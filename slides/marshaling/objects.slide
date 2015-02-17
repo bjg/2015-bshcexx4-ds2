@@ -1,0 +1,36 @@
+Go Objects and Serialisation
+
+BSc (Hons) in Computing - Evening Distributed Systems
+
+Brian Gillespie, School of Computing, NCI
+Jan 2015
+
+bgillespie@ncirl.ie
+
+@__bjg
+ 
+* Building an web calendar
+
+- Using TDD, let's write a simple Go program to process calendar entries. We will proceed as follows:
+
+- Create a data structure to represent a single calendar entry
+	import "time"
+	type Entry struct {
+		// Fields for ID, start, end, and description
+	}
+- Add a method on the calculate the duration of a specific event
+- Add support for multiple calendar entries (as a memory database)
+- Allow marshaling and unmarshaling of the entries to and from JSON
+- Test marshaling to and from a file
+- Add a REST API to process entries from the Web
+- Solution will be posted to [[https://github.com/bjg/2015-bshcexx4-ds2][module Github repo]]
+
+* Learning Resources
+
+- Best place to start learning Go in at the [[http://golang.org/][project web site]]
+- There is an [[http://tour.golang.org/][interactive tour]] which introduces you to the main elements of the language
+- The [[http://play.golang.org/][Go Playground]] allows you Learning Resourcesto write and test Go code in the browser
+- The [[http://golang.org/doc/effective_go.html][Effective Go]] document provides a more detailed treatment
+- The official [[https://golang.org/ref/spec][Go Language Specification]]
+- When [[https://www.google.ie/#q=golang][searching for Go resources on the web]], remember to use the keyword "golang" rather than just "go"
+- Follow [[https://twitter.com/golang][@golang]] on Twitter

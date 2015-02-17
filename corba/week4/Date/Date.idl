@@ -1,0 +1,6 @@
+
+module DateApp{
+  interface DateInterface{
+    string getDateMethod();
+  };//end interface DateInterface
+};//end module DateApp

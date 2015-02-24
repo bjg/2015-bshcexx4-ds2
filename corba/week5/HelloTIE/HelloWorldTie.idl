@@ -1,0 +1,8 @@
+module HelloTie
+{
+  interface Hello
+  { 
+    string sayHello();
+  };
+};
+

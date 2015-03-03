@@ -1,0 +1,8 @@
+module SquareCalculation
+{
+  interface SquareCalculator
+  { 
+    double getSquare(in float value);
+  };
+};
+

@@ -72,11 +72,11 @@ public class SampleSolnServer{
             System.out.println("Object 5 added to Context 3");
 
             nc[0] = new NameComponent("Sub-Context 1", "Context");
-            ctxs[2] = ctxs[1].bind_new_context(nc);
+            ctxs[3] = ctxs[1].bind_new_context(nc);
             System.out.println("Sub-Context 1 added to Context 2");
 
             nc[0] = new NameComponent("Object 3", "Object");
-            ctxs[2].rebind(nc, helloRef);
+            ctxs[3].rebind(nc, helloRef);
             System.out.println("Object 3 added to Sub-Context 1");
 
 

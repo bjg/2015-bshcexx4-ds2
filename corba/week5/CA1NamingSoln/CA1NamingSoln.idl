@@ -1,0 +1,8 @@
+module CA1NamingApp
+{
+  interface CA1NamingSoln
+  { 
+    double getSquare(in double n);
+  };
+};
+

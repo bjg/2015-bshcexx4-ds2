@@ -1,0 +1,15 @@
+
+module HelloCallBack  {
+
+    interface ClientOps  {
+        void callBack(in string message);
+    };
+
+    interface Hello {
+        string registerCB(in ClientOps c, in string message);    
+        
+    };
+
+ 
+};
+

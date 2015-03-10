@@ -1,0 +1,14 @@
+module HelloDynamicInvocation
+{
+  interface Hello
+  { 
+    //audience can represent
+    //1 for world
+    //2 for Ireland
+    //3 for Dublin
+    
+    string sayHello(in long audience);
+    
+  };
+};
+

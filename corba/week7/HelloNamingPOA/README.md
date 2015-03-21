@@ -1,4 +1,4 @@
-** Compiling and executing a CORBA client/server (Callback example)
+** Compiling and executing a CORBA client/server (POA example)
 
 1. idlj -fall HelloWorldName.idl
 1. idlj -fallTIE HelloWorldName.idl

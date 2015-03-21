@@ -15,6 +15,7 @@ public static void main (String args[]) {
         ORB orb = ORB.init(args, null);
         //Delegation model for creating a servant
         HelloPOA helloRef = new HelloPOATie(new HelloServant());
+        
         org.omg.CORBA.Object objRefPOA = orb.resolve_initial_references("RootPOA");
         POA rootPOA = POAHelper.narrow(objRefPOA);
     
@@ -53,6 +54,7 @@ public static void main (String args[]) {
     
         org.omg.CORBA.Object ServantObjectRef = rootPOA.id_to_reference(objID);
     
+        /*
         //You need to locate the naming service. The naming serivce helps you locate other objects.
         //The CORBA orb lets you locate certain services by name. The call
         //String[] services = orb.list_initial_services();
@@ -60,7 +62,7 @@ public static void main (String args[]) {
         //has the standard name NameService. To obtain an object reference to the service you use
         //resolve_initial_reference. It returns a generic CORBA object. Note you have to use
         //org.omg.CORBA.Object otherwise the compiler assumes that you mean java.lang.Object
-    
+        */
         org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
     
         //Next you need to convert this reference into a NamingContext reference

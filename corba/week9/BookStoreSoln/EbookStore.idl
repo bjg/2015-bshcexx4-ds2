@@ -1,0 +1,14 @@
+module EbookStoreApp {
+
+    struct EbookAccountDetails {
+    	string CustomerName;
+    	string CustomerAddress;
+    	string UniqueID;
+    	long Balance;
+    };
+
+    interface EbookStore {
+		void RegisterAccount(in any accountDetails, out string password);
+		void Payforabook(in string uniqueID, in long amount, out any accountDetails) ;
+    };
+};
